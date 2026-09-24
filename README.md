@@ -32,14 +32,19 @@ A machine learning-powered web app that recommends similar movies and predicts a
 
 ## Running Locally
 
-Model files (`.pkl`) are not included in this repo due to GitHub's file size limits. To run this project:
+Model files (`.pkl`) are tracked with [Git LFS](https://git-lfs.com) due to their size (`similarity.pkl` is ~176MB). To run this project:
 
-1. Clone this repo
-2. Run the data preprocessing + model training steps in a Colab notebook (using the TMDB 5000 Dataset) to generate `movies.pkl`, `similarity.pkl`, and `rating_model.pkl`
-3. Place the `.pkl` files in the project root
-4. Install dependencies: `pip install flask pandas scikit-learn`
-5. Run: `python app.py`
-6. Visit `http://127.0.0.1:5000`
+1. Clone this repo (make sure `git-lfs` is installed so the `.pkl` files download correctly: `git lfs install`)
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run: `python app.py`
+4. Visit `http://127.0.0.1:5000`
+
+## Deployment
+
+This app is set up to deploy on [Render](https://render.com) via `render.yaml`:
+
+1. Push this repo to GitHub (with Git LFS objects included).
+2. On Render, create a new **Blueprint** and point it at this repo — it will pick up `render.yaml` automatically (build: `git lfs pull && pip install -r requirements.txt`, start: `gunicorn app:app`).
 
 ## Dataset
 
