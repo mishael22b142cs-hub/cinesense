@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CineSense</title>
+    <style>
+        input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    width: 250px;
+}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+        h1 {
+            color: #E50914;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: #E50914;
+            color: white;
+            cursor: pointer;
+        }
+        .results {
+            margin-top: 30px;
+        }
+        .movie-card {
+            background-color: #222;
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎬 CineSense</h1>
+    <p>Select a movie to get similar recommendations</p>
+
+    <form action="/recommend" method="POST">
+        <select name="movie" required>
+            <option value="">-- Select a movie --</option>
+            {% for movie in movies %}
+                <option value="{{ movie }}" {% if movie == selected %}selected{% endif %}>{{ movie }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Recommend</button>
+    </form>
+
+    {% if recommendations %}
+    <div class="results">
+        <h2>Because you liked "{{ selected }}"</h2>
+        {% for movie in recommendations %}
+            <div class="movie-card">{{ movie }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <hr style="margin: 40px 0; border-color: #444;">
+
+<h2>🎯 Predict a Movie's Rating</h2>
+<p>Enter movie details to predict its rating</p>
+
+<form action="/predict" method="POST">
+    <input type="number" name="budget" placeholder="Budget (e.g. 50000000)" required step="any"><br>
+    <input type="number" name="popularity" placeholder="Popularity (e.g. 25.5)" required step="any"><br>
+    <input type="number" name="runtime" placeholder="Runtime in mins (e.g. 120)" required step="any"><br>
+    <input type="number" name="vote_count" placeholder="Vote Count (e.g. 1000)" required step="any"><br>
+    <button type="submit">Predict Rating</button>
+</form>
+
+{% if predicted_rating %}
+<div class="movie-card" style="margin-top:20px;">
+    <h3>Predicted Rating: ⭐ {{ predicted_rating }} / 10</h3>
+</div>
+{% endif %}
+</body>
+</html>

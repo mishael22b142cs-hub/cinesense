@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 Lib/
 Scripts/
 Include/
 pyvenv.cfg
 __pycache__/
 *.pyc
+=======
+__pycache__/
+*.pyc
+.vscode/
+>>>>>>> b790e9e956f02805cd0b7a02786a53a3846ece26
